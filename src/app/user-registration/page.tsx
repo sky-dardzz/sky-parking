@@ -15,9 +15,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { useUser } from "@clerk/nextjs"
 
 
 export default function Page() {
+  const {user} = useUser()
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
@@ -27,6 +30,8 @@ export default function Page() {
       car_color: ""
     }
   })
+  const router = useRouter()
+
   const onSubmit = async (values: z.infer<typeof registrationSchema> ) => {
     const res = await fetch('http://localhost:3000/api/user/register', {
       method: "POST",
@@ -34,9 +39,15 @@ export default function Page() {
     })
 
     if(res.ok){
-      console.log("wawiwa")
+      user?.update({
+        unsafeMetadata: {
+          registration: 'complete'
+        }
+      })
+      router.replace('/')
     }
   }
+  
   return (
     <div className='flex justify-center items-center'>
       <Card className='w-1/2 mt-14'>
@@ -111,7 +122,7 @@ export default function Page() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button className="bg-skyparkPrimary hover:bg-slate-600"  type="submit">Submit</Button>
             </form>
           </Form>
         </CardContent>
