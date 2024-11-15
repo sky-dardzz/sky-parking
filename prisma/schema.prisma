@@ -27,8 +27,8 @@ model Car {
 
 model ParkingSpace{
   id Int @id @default(autoincrement())
-  x_coordinates Int?
-  y_coordinates Int?
+  latitude Int?
+  longitude Int?
   parking_name String @unique
   ParkingSlot ParkingSlot[]
   rate Int?

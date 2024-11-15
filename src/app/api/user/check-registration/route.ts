@@ -13,11 +13,11 @@ export async function POST() {
       }
     );
   }
-  const checkRegistration = getOneUser(user.id)
+  const checkRegistration = await getOneUser(user.id)
   if (!checkRegistration) {
     return NextResponse.json(
       {
-        registrationStatus: "incomplete",
+        registrationStatus: "INCOMPLETE",
       },
       {
         status: 200,
@@ -26,7 +26,7 @@ export async function POST() {
   }
   return NextResponse.json(
     {
-      registrationStatus: "complete",
+      registrationStatus: "COMPLETE",
     },
     { status: 200 }
   );

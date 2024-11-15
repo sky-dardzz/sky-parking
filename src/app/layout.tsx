@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Metadata } from 'next'
 import './globals.css'
+import { LocationProvider } from '@/components/LocationContext'
 
 export const metadata: Metadata = { 
   title: "Skypark AI", 
@@ -12,6 +13,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   
   return (
     <ClerkProvider>
+      <LocationProvider>
       <html lang="en">
         <body>
           <header>
@@ -21,6 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main>{children}</main>
         </body>
       </html>
+      </LocationProvider>
     </ClerkProvider>
   )
 }

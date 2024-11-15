@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { registrationSchema } from "./registration-schema"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,11 +16,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import { useUser } from "@clerk/nextjs"
-
 
 export default function Page() {
-  const {user} = useUser()
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
@@ -39,14 +36,23 @@ export default function Page() {
     })
 
     if(res.ok){
-      user?.update({
-        unsafeMetadata: {
-          registration: 'complete'
-        }
-      })
       router.replace('/')
     }
   }
+  async function checkRegistration(){
+    const res = await fetch('http://localhost:3000/api/user/check-registration',{
+      method: "POST"
+    })
+    const data = await res.json()
+    if(data?.registrationStatus == "COMPLETE"){
+      router.replace('/')
+    }
+
+  }
+  useEffect(() => {
+    
+    checkRegistration()
+  },[router])
   
   return (
     <div className='flex justify-center items-center'>
