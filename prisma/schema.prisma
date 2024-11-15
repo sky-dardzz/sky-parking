@@ -14,7 +14,7 @@ model User {
   clerkId String @id @unique
   first_name String
   last_name String
-  Car     Car[]
+  car     Car[]
 }
 
 model Car {
@@ -27,19 +27,21 @@ model Car {
 
 model ParkingSpace{
   id Int @id @default(autoincrement())
-  latitude Int?
-  longitude Int?
+  latitude Float?
+  longitude Float?
   parking_name String @unique
-  ParkingSlot ParkingSlot[]
+  parking_slot ParkingSlot[]
   rate Int?
 }
 
 
 model ParkingSlot{
   id Int @id @default(autoincrement())
-  label String
+  label String @unique
   parkingSpace ParkingSpace @relation(fields: [parkingSpaceId], references: [id])
   parkingSpaceId Int
   status String
+  long Float @default(0)
+  lat Float @default(0)
 
 }

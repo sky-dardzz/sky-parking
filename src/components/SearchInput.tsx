@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { Location } from "./LocationContext";
 
 export default function SearchInput() {
@@ -48,7 +47,7 @@ export default function SearchInput() {
       <div className="bg-white w-1/3 mx-auto text-left">
         {searchResult && searchResult.map((result, index: number) => (
           <div key={index} className="truncate p-3 border-b hover:bg-[#e7e7e7] transition-all">
-            <Link href={`/maps?lat=${result.coordinates.lat}&lng=${result.coordinates.long}`}>
+            <Link href={`/maps?lat=${result.coordinates.lat}&lng=${result.coordinates.lng}`}>
               {result.description}
             </Link>
           </div>

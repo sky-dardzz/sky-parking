@@ -8,7 +8,7 @@ export interface Location {
 }
 interface Coordinates{
     lat: number;
-    long: number;
+    lng: number;
 }
 interface LocationContextProps {
     location: Location;
@@ -18,7 +18,7 @@ interface LocationContextProps {
 const defaultLocation: Location = {
     coordinates: {
         lat: 0,
-        long: 0
+        lng: 0
     },
     placeId: '',
     description: ''
